@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+body {
+    font-family: 'Open sans', sans-serif;
+}
+
+#container{
+ width:450px;
+ margin: auto;
+ margin-top:12%;
+}
+
+
+form {
+ width:100%;
+ padding: 32px;
+ border: 2px solid black;
+ background: white;
+}
+#container h1{
+ width: 45%;
+ margin: auto;
+ padding-bottom: 20px;
+}
+
+input[type=text], input[type=password] {
+ width: 100%;
+ padding: 10px;
+ margin: 10px 0;
+ display: inline-block;
+ border: 1px solid #8A8A8A;
+}
+
+button[type=submit] {
+ background-color: #333;
+ color: white;
+ padding: 10px;
+ margin: 8px 0;
+ border: none;
+ cursor: pointer;
+ width: 100%;
+}
+button[type=submit]:hover {
+ background-color: white;
+ color: #333;
+ border: 1px solid #333;
+}
+
+.error-message {
+    border: 1px solid;
+	margin: 10px 0px;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+    color: #D8000C;
+	background-color: #FFBABA;
+}
