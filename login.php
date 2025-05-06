@@ -33,7 +33,7 @@ session_start();
     <script>
         // Fonction pour changer l'action du formulaire en fonction du bouton cliqué
         document.getElementById("loginButton").addEventListener("click", function() {
-            document.getElementById("loginForm").action = "verif.php";
+            document.getElementById("loginForm").action = "login.php";
         });
     </script>
 </body>

@@ -9,7 +9,7 @@ session_start();
 </head>
 <body>
     <div id="container">
-        <form id="registerForm" method="POST">
+        <form id="registerForm" method="POST" enctype="multipart/form-data">
             <h1>S'enregistrer</h1>
          
             <label><b>Email</b></label>
@@ -28,22 +28,20 @@ session_start();
             <input type="text" placeholder="Entrer votre adresse" name="address" required>
 
             <label><b>Êtes-vous vendeur ? : </b></label>
-            <input type="radio" name="is_seller" value="1" id="sellerYes" accept="image/png, image/jpeg"> Oui
-            <input type="radio" name="is_seller" value="0" id="sellerNo"accept="image/png, image/jpeg"> Non
+            <input type="radio" name="is_seller" value="1" id="sellerYes"> Oui
+            <input type="radio" name="is_seller" value="0" id="sellerNo"> Non
 
             <div id="sellerFields" style="display: none;">
                 <br/>
                 <label><b>CNI</b></label>
-                <input type="file" name="cni" placeholder="Carte d'identité" required>>
-
+                <input type="file" name="cni" placeholder="Carte d'identité" accept="image/png, image/jpeg">
+                <br/><br/>
                 <label><b>IBAN</b></label>
-                <input type="text" name="iban" placeholder="Numéro SIRET">
-
-
+                <input type="text" name="iban" placeholder="IBAN">
                 
             </div>
 
-            <button type="submit" id="loginButton" name="action" value="login">LOGIN</button>
+            <button type="submit" id="registerButton" name="action" value="register">REGISTER</button>
             <?php
             // Vérifie si une erreur est stockée dans la variable de session
             if(isset($_SESSION['register_error'])) {
