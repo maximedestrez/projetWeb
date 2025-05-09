@@ -36,15 +36,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$erreur) {
         $vendeur_id = $_SESSION['id_user'];
+        $taille = !empty($_POST['taille']) ? mysqli_real_escape_string($idcom, $_POST['taille']) : null;
 
-        $query = "INSERT INTO articles (nom, description, prix, categorie, kilometrage, etat, photos, vendeur_id)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO articles (nom, description, prix, categorie, kilometrage, etat, taille, photos, vendeur_id)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = mysqli_prepare($idcom, $query);
-        mysqli_stmt_bind_param($stmt, "ssdssssi", $nom, $description, $prix, $categorie, $kilometrage, $etat, $photo_path, $vendeur_id);
+        mysqli_stmt_bind_param($stmt, "ssdsssssi", $nom, $description, $prix, $categorie, $kilometrage, $etat, $taille, $photo_path, $vendeur_id);
         
         if (mysqli_stmt_execute($stmt)) {
-            $success = "Article ajouté avec succès !";
+            header("Location: index.php");
+            exit();
         } else {
             $erreur = "Erreur SQL : " . mysqli_error($idcom);
         }
@@ -104,7 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="champ-carte" style="display:none;">
             <label for="etat">État :</label>
             <input type="text" name="etat">
-
             <label for="photo">Photo :</label>
             <input type="file" name="photo" accept="image/*">
         </div>

@@ -1,0 +1,117 @@
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 15%;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.search-bar {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    width: 40%;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+}
+
+.account-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sell-button {
+    background-color: rgb(99, 99, 99);
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.sell-button:hover {
+    background-color: rgb(185, 184, 184);
+}
+
+.account-options a {
+    color: white;
+    background-color: rgb(124, 124, 124);
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.account-options a:hover {
+    background-color: rgb(179, 179, 179);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    background-color: transparent;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.categories {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.categories a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.categories a:hover {
+    text-decoration: underline;
+}
