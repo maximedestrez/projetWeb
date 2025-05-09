@@ -62,9 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['pass
               VALUES ('$nom', '$prenom', '$email', '$password_hash', '$adresse', $est_vendeur, " . ($iban ? "'$iban'" : "NULL") . ")";
     
     if (mysqli_query($idcom, $query)) {
-        $_SESSION['email'] = $email;
+        $_SESSION['prenom'] = $prenom;
         $_SESSION['id_user'] = mysqli_insert_id($idcom);
-        header("Location: main.php");
+        $_SESSION['est_vendeur'] = $est_vendeur;
+        header("Location: index.php");
         exit;
     } else {
         $_SESSION['register_error'] = "Erreur d'enregistrement.";
