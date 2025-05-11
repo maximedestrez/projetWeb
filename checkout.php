@@ -10,7 +10,7 @@ if (!isset($_SESSION['id_user'])) {
 }
 
 // Récupérer le panier
-$query = "SELECT a.*, p.quantite 
+$query = "SELECT a.*
          FROM panier p
          JOIN articles a ON p.article_id = a.id
          WHERE p.acheteur_id = ?";
@@ -22,7 +22,7 @@ $articles = mysqli_stmt_get_result($stmt)->fetch_all(MYSQLI_ASSOC);
 // Calcul du total
 $total = 0;
 foreach ($articles as $article) {
-    $total += $article['prix'] * $article['quantite'];
+    $total += $article['prix'];
 }
 
 mysqli_close($idcom);

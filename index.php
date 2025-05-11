@@ -13,7 +13,7 @@ if (isset($_GET['category']) && !empty(trim($_GET['category']))) {
     $category = mysqli_real_escape_string($idcom, trim($_GET['category']));
 }
 
-$requete = "SELECT * FROM articles WHERE 1";
+$requete = "SELECT * FROM articles WHERE vendu = 0";
 if ($search) {
     $requete .= " AND (nom LIKE '%$search%' OR description LIKE '%$search%')";
 }

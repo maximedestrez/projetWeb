@@ -12,7 +12,7 @@ if (!isset($_GET['id']) || empty(trim($_GET['id']))) {
 $id_article = mysqli_real_escape_string($idcom, trim($_GET['id']));
 
 // Récupération des informations de l'article
-$requete = "SELECT * FROM articles WHERE id = '$id_article'";
+$requete = "SELECT * FROM articles WHERE id = '$id_article' AND vendu = 0";
 $resultat = mysqli_query($idcom, $requete);
 $article = mysqli_fetch_assoc($resultat);
 mysqli_free_result($resultat);

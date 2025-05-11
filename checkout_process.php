@@ -13,7 +13,7 @@ try {
     $user_id = $_SESSION['id_user'];
     
     // 1. Récupérer le panier et calculer le total
-    $query = "SELECT a.prix, a.vendeur_id, p.quantite, a.id AS article_id 
+    $query = "SELECT a.prix, a.vendeur_id, a.id AS article_id 
              FROM panier p 
              JOIN articles a ON p.article_id = a.id 
              WHERE p.acheteur_id = ?";
@@ -29,7 +29,7 @@ try {
     // 2. Calculer le total
     $total = 0;
     foreach ($articles as $article) {
-        $total += $article['prix'] * $article['quantite'];
+        $total += $article['prix'];
     }
 
     // 3. Vérifier le solde
@@ -48,16 +48,16 @@ try {
 
     // 5. Créditer les vendeurs et enregistrer les transactions
     foreach ($articles as $article) {
-        $montant = $article['prix'] * $article['quantite'];
+        $montant = $article['prix'];
         $vendeur_id = $article['vendeur_id'];
         
-       // Créditer le vendeur (déjà correct)
+// Créditer le vendeur
 $update_vendeur = "UPDATE utilisateur SET solde = solde + ? WHERE id = ?";
 $stmt_vendeur = mysqli_prepare($idcom, $update_vendeur);
 mysqli_stmt_bind_param($stmt_vendeur, "di", $montant, $vendeur_id);
 mysqli_stmt_execute($stmt_vendeur);
 
-// 1. Enregistrer la transaction
+// Enregistrer la transaction
 $insert_transaction = "INSERT INTO transactions 
     (acheteur_id, vendeur_id, article_id, montant, statut) 
     VALUES (?, ?, ?, ?, 'payé')";
@@ -68,13 +68,19 @@ mysqli_stmt_bind_param($stmt_transaction, "iiid",
     $article['article_id'],
     $montant
 );
-mysqli_stmt_execute($stmt_transaction); // <-- EXÉCUTION ICI
+mysqli_stmt_execute($stmt_transaction);
 
-// 2. Notification après enregistrement de la transaction
-$message_vendeur = "Votre article " . $article['nom'] . " a été acheté par " . $_SESSION['prenom'];
+// Marquer l’article comme vendu
+$update_article = "UPDATE articles SET vendu = 1, date_vente = NOW() WHERE id = ?";
+$stmt_article = mysqli_prepare($idcom, $update_article);
+mysqli_stmt_bind_param($stmt_article, "i", $article['article_id']);
+mysqli_stmt_execute($stmt_article);
+
+// Notification
+$message_vendeur = "Votre article a été acheté par " . $_SESSION['prenom'];
 $insert_notification = "INSERT INTO notifications (user_id, message) VALUES (?, ?)";
 $stmt_notif = mysqli_prepare($idcom, $insert_notification);
-mysqli_stmt_bind_param($stmt_notif, "is", $article['vendeur_id'], $message_vendeur);
+mysqli_stmt_bind_param($stmt_notif, "is", $vendeur_id, $message_vendeur);
 mysqli_stmt_execute($stmt_notif);
     }
 

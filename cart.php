@@ -53,10 +53,10 @@ if (isset($_POST['ajouter_panier'])) {
 }
 
 // Récupération du panier
-$query = "SELECT p.id AS panier_id, a.*, p.quantite 
+$query = "SELECT p.id AS panier_id, a.*
          FROM panier p
          JOIN articles a ON p.article_id = a.id
-         WHERE p.acheteur_id = ?";
+         WHERE p.acheteur_id = ? AND vendu = 0";
 $stmt = mysqli_prepare($idcom, $query);
 mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_user']);
 mysqli_stmt_execute($stmt);
@@ -66,7 +66,7 @@ $articles = mysqli_fetch_all($result, MYSQLI_ASSOC);
 // Calcul du total
 $total = 0;
 foreach ($articles as $article) {
-    $total += $article['prix'] * $article['quantite'];
+    $total += $article['prix'];
 }
 
 mysqli_close($idcom);
@@ -135,12 +135,12 @@ mysqli_close($idcom);
                     <div>
                         <h3><?= htmlspecialchars($article['nom']) ?></h3>
                         <p>Prix unitaire : <?= number_format($article['prix'], 2) ?> €</p>
-                        <p>Quantité : <?= $article['quantite'] ?></p>
+                      
                     </div>
                     <div>
                         <form action="update_quantity.php" method="post">
                             <input type="hidden" name="panier_id" value="<?= $article['panier_id'] ?>">
-                            <input type="number" name="quantite" value="<?= $article['quantite'] ?>" min="1" style="width: 60px;">
+                            
                             <button type="submit">Modifier</button>
                         </form>
                         <a class="delete" href="remove_from_cart.php?id=<?= $article['panier_id'] ?>">
