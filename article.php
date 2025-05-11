@@ -55,6 +55,7 @@ if (!$article) {
 <?php
 include("header.php");
 ?>
+<link rel="stylesheet" href="assets/css/index.css">
 
 <main>
     <div class="article-details">
@@ -105,6 +106,10 @@ include("header.php");
                     break;
             } ?>
         </ul>
+        <form method="post" action="cart.php">
+    <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+    <button type="submit" name="ajouter_panier">Ajouter au panier</button>
+</form>
     </div>
 </main>
 

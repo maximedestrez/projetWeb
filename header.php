@@ -8,7 +8,12 @@
         </form>
         <div class="account-options">
             <?php if (isset($_SESSION['est_vendeur']) && $_SESSION['est_vendeur'] == 1): ?>
-                <a href="add_article.php" class="sell-button">Vendre un article</a>
+            <a href="add_article.php" class="sell-button">Vendre un article</a>
+            <a href="credit_account.php">Créditer mon compte</a>
+            <a href="cart.php">Panier</a>
+            <a href="index.php">Accueil</a>
+            <a href="mes_commandes.php">Histo commandes</a>
+            <a href="mes_ventes.php">Mes ventes</a>
             <?php endif; ?>
             <?php if (!isset($_SESSION['id_user'])): ?>
                 <a href="login.php">Connexion</a>
@@ -16,6 +21,7 @@
             <?php else: ?>
                 <div class="dropdown">
                     <button class="dropbtn">Bonjour, <?= htmlspecialchars($_SESSION['prenom']) ?> !</button>
+                    <p>Solde : <?= number_format($_SESSION['solde'], 2) ?> €</p>
                     <div class="dropdown-content">
                         <a href="logout.php">Déconnexion</a>
                     </div>
