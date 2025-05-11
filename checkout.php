@@ -32,18 +32,39 @@ mysqli_close($idcom);
 <html>
 <head>
     <title>Confirmation de paiement</title>
-    <link rel="stylesheet" href="assets/css/stylelogin.css">
+    <link rel="stylesheet" href="assets/css/index.css">
     <style>
+        .checkout-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
         .checkout-info { 
             background: #f8f9fa;
             padding: 20px;
             border-radius: 5px;
             margin: 20px 0;
         }
+        .confirm-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
-<body>
-    <?php include('header.php'); ?>
+<?php include('header.php'); ?>
+<main>
 
     <div class="checkout-container">
         <h1>Confirmer le paiement</h1>
@@ -58,7 +79,7 @@ mysqli_close($idcom);
             <p>Solde disponible : <strong><?= number_format($_SESSION['solde'], 2) ?> €</strong></p>
         </div>
 
-        <form action="checkout_process.php" method="post">
+        <form class="form" action="checkout_process.php" method="post">
             <button type="submit" class="confirm-button">
                 Confirmer le paiement avec mon solde
             </button>
@@ -66,6 +87,6 @@ mysqli_close($idcom);
         </form>
     </div>
 
-    <?php include('footer.php'); ?>
-</body>
+</main>
+<?php include('footer.php'); ?>
 </html>

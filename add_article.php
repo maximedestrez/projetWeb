@@ -3,6 +3,21 @@ session_start();
 include("connex.inc.php");
 $idcom = connex("projetweb", "myparam");
 
+function handleFileUpload($file) {
+    $upload_dir = "uploads/";
+    if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+    $photo_name = uniqid() . "_" . basename($file["name"]);
+    $target_file = $upload_dir . $photo_name;
+
+    if (move_uploaded_file($file["tmp_name"], $target_file)) {
+        return $target_file;
+    } else {
+        global $erreur;
+        $erreur = "Erreur lors de l'upload de la photo.";
+        return null;
+    }
+}
+
 $erreur = "";
 $success = "";
 
@@ -16,17 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Gestion du fichier photo (si fourni)
     $photo_path = null;
-    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == UPLOAD_ERR_OK) {
-        $upload_dir = "uploads/";
-        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-        $photo_name = uniqid() . "_" . basename($_FILES["photo"]["name"]);
-        $target_file = $upload_dir . $photo_name;
-
-        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
-            $photo_path = $target_file;
-        } else {
-            $erreur = "Erreur lors de l'upload de la photo.";
-        }
+    if ($categorie === 'voiture' && isset($_FILES['photo_voiture']) && $_FILES['photo_voiture']['error'] == UPLOAD_ERR_OK) {
+        $photo_path = handleFileUpload($_FILES['photo_voiture']);
+    } elseif ($categorie === 'carte' && isset($_FILES['photo_carte']) && $_FILES['photo_carte']['error'] == UPLOAD_ERR_OK) {
+        $photo_path = handleFileUpload($_FILES['photo_carte']);
+    } elseif ($categorie === 'vetement' && isset($_FILES['photo_vetement']) && $_FILES['photo_vetement']['error'] == UPLOAD_ERR_OK) {
+        $photo_path = handleFileUpload($_FILES['photo_vetement']);
+    } elseif ($categorie === 'livre' && isset($_FILES['photo_livre']) && $_FILES['photo_livre']['error'] == UPLOAD_ERR_OK) {
+        $photo_path = handleFileUpload($_FILES['photo_livre']);
     }
 
     // Vérifie que l'utilisateur est connecté
@@ -62,22 +74,87 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/index.css">
     <title>Ajouter un article</title>
     <style>
-        body { font-family: sans-serif; margin: 20px; }
-        label { display: block; margin-top: 10px; }
-        input, textarea, select { width: 100%; padding: 8px; margin-top: 5px; }
-        .message { margin-top: 15px; color: green; }
-        .erreur { color: red; }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+
+        .form-article {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select, .publish {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .publish {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .publish:hover {
+            background-color: #45a049;
+        }
+
+        .erreur {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .message {
+            color: green;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #champ-voiture, #champ-carte, #champ-vetement, #champ-livre {
+            display: none;
+        }
     </style>
 </head>
-<body>
+<?php
+include("header.php");
+?>
+
+<main>
     <h1>Ajouter un article</h1>
 
     <?php if ($success): ?><p class="message"><?= htmlspecialchars($success) ?></p><?php endif; ?>
     <?php if ($erreur): ?><p class="erreur"><?= htmlspecialchars($erreur) ?></p><?php endif; ?>
 
-    <form method="post" enctype="multipart/form-data">
+    <form class="form-article" method="post" enctype="multipart/form-data"> <!-- enctype pour le téléchargement de fichiers -->
         <label for="nom">Nom :</label>
         <input type="text" name="nom" required>
 
@@ -99,30 +176,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="champ-voiture" style="display:none;">
             <label for="kilometrage">Kilométrage :</label>
             <input type="number" name="kilometrage" min="0">
-            <label for="photo">Photo :</label>
-            <input type="file" name="photo" accept="image/*">
+            <label for="photo_voiture">Photo :</label>
+            <input type="file" name="photo_voiture" accept="image/*">
         </div>
 
         <div id="champ-carte" style="display:none;">
             <label for="etat">État :</label>
             <input type="text" name="etat">
-            <label for="photo">Photo :</label>
-            <input type="file" name="photo" accept="image/*">
+            <label for="photo_carte">Photo :</label>
+            <input type="file" name="photo_carte" accept="image/*">
         </div>
 
         <div id="champ-vetement" style="display:none;">
             <label for="taille">Taille :</label>
             <input type="text" name="taille">
-            <label for="photo">Photo :</label>
-            <input type="file" name="photo" accept="image/*">
+            <label for="photo_vetement">Photo :</label>
+            <input type="file" name="photo_vetement" accept="image/*">
         </div>
 
         <div id="champ-livre" style="display:none;">
             <label for="etat">État :</label>
             <input type="text" name="auteur">
+            <label for="photo_livre">Photo :</label>
+            <input type="file" name="photo_livre" accept="image/*">
         </div>
 
-        <button type="submit">Publier</button>
+        <button class="publish" type="submit">Publier</button>
     </form>
 
     <script>
@@ -148,5 +227,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     });
     </script>
-</body>
+</main>
+<?php include("footer.php"); ?>
 </html>

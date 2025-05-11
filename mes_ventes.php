@@ -44,7 +44,7 @@ try {
 <html>
 <head>
     <title>Mes ventes</title>
-    <link rel="stylesheet" href="assets/css/stylelogin.css">
+    <link rel="stylesheet" href="assets/css/index.css">
     <style>
         .ventes-container { max-width: 1200px; margin: 20px auto; }
         .vente-card {

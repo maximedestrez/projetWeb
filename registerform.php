@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['pass
         $_SESSION['prenom'] = $prenom;
         $_SESSION['id_user'] = mysqli_insert_id($idcom);
         $_SESSION['est_vendeur'] = $est_vendeur;
+        $_SESSION['solde'] = 0;
         header("Location: index.php");
         exit;
     } else {

@@ -3,6 +3,7 @@ session_start();
 include("connex.inc.php");
 $idcom = connex("projetweb", "myparam");
 
+
 // Vérification connexion utilisateur
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
@@ -16,7 +17,6 @@ if (isset($_POST['ajouter_panier'])) {
         header("Location: index.php");
         exit;
     }
-
     $article_id = mysqli_real_escape_string($idcom, $_POST['article_id']);
 
     // Vérification existence article
@@ -75,7 +75,7 @@ mysqli_close($idcom);
 <html>
 <head>
     <title>Mon Panier</title>
-    <link rel="stylesheet" href="assets/css/stylelogin.css">
+    <link rel="stylesheet" href="assets/css/index.css">
     <style>
         .panier-container { max-width: 800px; margin: 20px auto; }
         .article-panier { 
@@ -95,6 +95,25 @@ mysqli_close($idcom);
         }
         .error { color: red; }
         .success { color: green; }
+        .delete { 
+            color: red; 
+            text-decoration: none; 
+            margin-left: 10px; 
+        }
+        .delete:hover { 
+            text-decoration: underline; 
+        }
+        .checkout-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .checkout-button:hover { 
+            background: #45a049; 
+        }
     </style>
 </head>
 <body>
@@ -124,8 +143,7 @@ mysqli_close($idcom);
                             <input type="number" name="quantite" value="<?= $article['quantite'] ?>" min="1" style="width: 60px;">
                             <button type="submit">Modifier</button>
                         </form>
-                        <a href="remove_from_cart.php?id=<?= $article['panier_id'] ?>" 
-                           style="color: red; margin-left: 10px;">
+                        <a class="delete" href="remove_from_cart.php?id=<?= $article['panier_id'] ?>">
                             Supprimer
                         </a>
                     </div>
@@ -137,14 +155,13 @@ mysqli_close($idcom);
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <a href="checkout.php" 
-                   style="padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none;">
+                <a class="checkout-button" href="checkout.php">
                     Passer la commande
                 </a>
             </div>
         <?php endif; ?>
     </div>
 
-    <?php include('footer.php'); ?>
 </body>
+<?php include('footer.php'); ?>
 </html>

@@ -49,6 +49,14 @@ if (!$article) {
             padding-left: 20px;
             list-style: square;
         }
+        .article-details img {
+            max-width: 500px;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
