@@ -1,10 +1,10 @@
 <?php
 session_start();
-include("connex.inc.php");
+include("../includes/connex.inc.php");
 
 // Vérifier si l'utilisateur est un vendeur connecté
 if (!isset($_SESSION['id_user']) || $_SESSION['est_vendeur'] != 1) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
