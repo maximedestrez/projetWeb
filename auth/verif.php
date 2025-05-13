@@ -2,7 +2,7 @@
 // Fonction permettant de vérifier si un utilisateur et un mot de passe correspondent
 if (isset($_POST['email']) && isset($_POST['password'])) {
     session_start();
-    include("connex.inc.php");
+    include("../includes/connex.inc.php");
     $idcom = connex("projetweb", "myparam");
 
     $email = mysqli_real_escape_string($idcom, htmlspecialchars($_POST['email'])); 
@@ -23,7 +23,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $_SESSION['prenom'] = $prenom;
         $_SESSION['est_vendeur'] = $est_vendeur;
         $_SESSION['solde'] = $solde;
-        header('Location: index.php');
+        header('Location: ../index.php');
         exit;
     } else {
         $_SESSION['register_error'] = "Utilisateur ou mot de passe incorrect";

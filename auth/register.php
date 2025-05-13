@@ -5,7 +5,7 @@ session_start();
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="assets/css/stylelogin.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="../assets/css/stylelogin.css" media="screen" type="text/css" />
 </head>
 <body>
     <div id="container">

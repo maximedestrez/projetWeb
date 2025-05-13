@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connex.inc.php");
+include("includes/connex.inc.php");
 $idcom = connex("projetweb", "myparam");
 
 // Traitement recherche et tri par catégorie
@@ -30,7 +30,7 @@ mysqli_close($idcom);
 ?>
 
 <?php
-include("header.php");
+include("includes/header.php");
 ?>
 <link rel="stylesheet" href="assets/css/index.css">
 <main>
@@ -38,7 +38,7 @@ include("header.php");
     <div class="articles">
         <?php if ($articles): ?>
             <?php foreach ($articles as $article): ?>
-                <a href="article.php?id=<?= htmlspecialchars($article['id']) ?>" class="article-card">
+                <a href="pages/article.php?id=<?= htmlspecialchars($article['id']) ?>" class="article-card">
                     <h3><?= htmlspecialchars($article['nom']) ?></h3>
                     <p><?= htmlspecialchars($article['description']) ?></p>
                     <p><strong>Prix :</strong> <?= htmlspecialchars($article['prix']) ?> €</p>
@@ -51,5 +51,5 @@ include("header.php");
 </main>
 
 <?php
-include("footer.php");
+include("includes/footer.php");
 ?>

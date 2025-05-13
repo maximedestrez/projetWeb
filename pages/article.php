@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connex.inc.php");
+include("../includes/connex.inc.php");
 $idcom = connex("projetweb", "myparam");
 
 // Vérification de l'ID de l'article
@@ -61,9 +61,9 @@ if (!$article) {
 </head>
 <body>
 <?php
-include("header.php");
+include("../includes/header.php");
 ?>
-<link rel="stylesheet" href="assets/css/index.css">
+<link rel="stylesheet" href="../assets/css/index.css">
 
 <main>
     <div class="article-details">
@@ -122,7 +122,7 @@ include("header.php");
 </main>
 
 <?php
-include("footer.php");
+include("../includes/footer.php");
 ?>
 </body>
 </html>

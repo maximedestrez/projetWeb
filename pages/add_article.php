@@ -1,10 +1,10 @@
 <?php
 session_start();
-include("connex.inc.php");
+include("../includes/connex.inc.php");
 $idcom = connex("projetweb", "myparam");
 
 function handleFileUpload($file) {
-    $upload_dir = "uploads/";
+    $upload_dir = "../uploads/";
     if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
     $photo_name = uniqid() . "_" . basename($file["name"]);
     $target_file = $upload_dir . $photo_name;
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_bind_param($stmt, "ssdsssssi", $nom, $description, $prix, $categorie, $kilometrage, $etat, $taille, $photo_path, $vendeur_id);
         
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit();
         } else {
             $erreur = "Erreur SQL : " . mysqli_error($idcom);
@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
     <title>Ajouter un article</title>
     <style>
         main {
@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <?php
-include("header.php");
+include("../includes/header.php");
 ?>
 
 <main>
@@ -228,5 +228,5 @@ include("header.php");
     });
     </script>
 </main>
-<?php include("footer.php"); ?>
+<?php include("../includes/footer.php"); ?>
 </html>

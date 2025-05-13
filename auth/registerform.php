@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connex.inc.php");
+include("../includes/connex.inc.php");
 $idcom = connex("projetweb", "myparam");
 
 function verifierIBAN($iban) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['pass
         $_SESSION['id_user'] = mysqli_insert_id($idcom);
         $_SESSION['est_vendeur'] = $est_vendeur;
         $_SESSION['solde'] = 0;
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit;
     } else {
         $_SESSION['register_error'] = "Erreur d'enregistrement.";
